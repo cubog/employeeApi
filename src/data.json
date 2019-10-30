@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "fullName": "Juan Fernandez",
+    "age": 29,
+    "cityCode": "MEX",
+    "email": "jfer@email.com",
+    "salary": 3500
+  },
+  {
+    "id": 2,
+    "fullName": "Andre Montes",
+    "age": 42,
+    "cityCode": "CBJ",
+    "email": "amon@email.com",
+    "salary": 2700
+  },
+  {
+    "id": 3,
+    "fullName": "Phill Morris",
+    "age": 37,
+    "cityCode": "LAX",
+    "email": "pmor@email.com",
+    "salary": 6500
+  },
+  {
+    "fullName": "a",
+    "age": 20,
+    "cityCode": "MEX",
+    "salary": 3000,
+    "id": 4,
+    "asd": "asd"
+  }
+]
