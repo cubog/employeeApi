@@ -27,7 +27,7 @@ const rootDir = __dirname;
       `At ${error.modelName}${error.dataPath}, value '${error.data}' ${error.message}`,
     options: { verbose: true }
   },
-  componentsScan: [`${rootDir}/middlewares/**/**.ts`]
+  componentsScan: [`${rootDir}/services/**/**.js`]
 })
 export class Server extends ServerLoader {
   /**

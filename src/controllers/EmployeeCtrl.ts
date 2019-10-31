@@ -1,41 +1,49 @@
 import {
   BodyParams,
+  PathParams,
+  QueryParams,
   Controller,
   Get,
   Post,
   Put,
   Delete,
-  UseBefore
+  UseBefore,
+  Required
 } from "@tsed/common";
 import { EmployeeModel } from "../models/EmployeeModel";
-import {
-  getEmployees,
-  saveEmployee,
-  updateEmployee
-} from "../services/DbServices";
 import { CustomMiddleware } from "../middlewares/CustomMiddleware";
+import { DbService } from "../services/DbService";
 
+/**
+ * Employess controller
+ */
 @Controller("/employees")
 export class EmployeeCtrl {
+  constructor(private dbService: DbService) {}
+
   @Get()
-  async getAll(): Promise<any> {
-    return getEmployees();
+  getAll(): Promise<EmployeeModel[]> {
+    return this.dbService.getEmployees();
   }
 
   @Post()
   @UseBefore(CustomMiddleware)
-  async createEmployee(@BodyParams() model: EmployeeModel): Promise<any> {
-    return saveEmployee(model);
+  createEmployee(
+    @BodyParams(EmployeeModel) model: EmployeeModel
+  ): Promise<EmployeeModel[]> {
+    return this.dbService.saveEmployee(model);
   }
 
-  @Put()
-  async updateEmployee(@BodyParams() model: EmployeeModel) {
-    // await updateEmployee();
-    return "employee updated";
+  @Put("/:id")
+  updateEmployee(
+    @PathParams("id") @Required() id: number,
+    @BodyParams(EmployeeModel) model: EmployeeModel
+  ): Promise<EmployeeModel[] | string> {
+    return this.dbService.updateEmployee(id, model);
   }
 
   @Delete()
-  deleteEmployee() {
-    return "employee deleted";
+  deleteEmployee(@QueryParams("id") id: number): Promise<string> {
+    return this.dbService.deleteEmployee(id);
   }
 }

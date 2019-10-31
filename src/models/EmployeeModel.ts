@@ -4,12 +4,11 @@ import {
   Required,
   MaxLength,
   Email,
-  UniqueItems,
-  Property,
-  IgnoreProperty
+  Property
 } from "@tsed/common";
 
 export class EmployeeModel {
+  @Property()
   id: number;
 
   @Required()

@@ -22,13 +22,5 @@
     "cityCode": "LAX",
     "email": "pmor@email.com",
     "salary": 6500
-  },
-  {
-    "fullName": "a",
-    "age": 20,
-    "cityCode": "MEX",
-    "salary": 3000,
-    "id": 4,
-    "asd": "asd"
   }
 ]
