@@ -5,6 +5,7 @@ import {
 } from "@tsed/common";
 import "@tsed/ajv";
 import "@tsed/swagger";
+var cors = require("cors");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const compress = require("compression");
@@ -40,6 +41,7 @@ export class Server extends ServerLoader {
       .use(compress({}))
       .use(methodOverride())
       .use(bodyParser.json())
+      .use(cors())
       .use(
         bodyParser.urlencoded({
           extended: true

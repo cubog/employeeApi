@@ -22,5 +22,13 @@
     "cityCode": "LAX",
     "email": "pmor@email.com",
     "salary": 6500
+  },
+  {
+    "fullName": "Jose",
+    "age": 12,
+    "cityCode": "HAB",
+    "email": "e@d.com",
+    "salary": 123,
+    "id": 4
   }
 ]
