@@ -8,7 +8,7 @@ module.exports = {
   verbose: true,
   collectCoverage: true,
   moduleFileExtensions: ["ts", "js", "json"],
-  testMatch: ["**/tests/**/*.test.ts"],
+  testMatch: ["<rootDir>/tests/**/*.test.ts"],
   testEnvironment: "node",
   testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/out/"],
   modulePathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/out/"],

@@ -30,7 +30,7 @@ export class EmployeeCtrl {
   @UseBefore(CustomMiddleware)
   createEmployee(
     @BodyParams(EmployeeModel) model: EmployeeModel
-  ): Promise<EmployeeModel[]> {
+  ): Promise<string> {
     return this.dbService.saveEmployee(model);
   }
 
@@ -38,7 +38,7 @@ export class EmployeeCtrl {
   updateEmployee(
     @PathParams("id") @Required() id: number,
     @BodyParams(EmployeeModel) model: EmployeeModel
-  ): Promise<EmployeeModel[] | string> {
+  ): Promise<string> {
     return this.dbService.updateEmployee(id, model);
   }
 
