@@ -6,7 +6,7 @@ import { EmployeeModel } from "../../src/models/EmployeeModel";
 describe("DbService", () => {
   afterEach(TestContext.reset);
 
-  it("Should receive all employees", inject(
+  test("Should receive all employees", inject(
     [DbService],
     async (dbService: DbService) => {
       let result: EmployeeModel[] = await dbService.getEmployees();
@@ -14,45 +14,55 @@ describe("DbService", () => {
     }
   ));
 
-  it("Add a new employee", inject([DbService], async (dbService: DbService) => {
-    const email = "doug@r.com";
-    const result: string = await dbService.saveEmployee({
-      fullName: "Jorge Lopez",
-      age: 47,
-      cityCode: "HAB",
-      email: email,
-      salary: 10000,
-      id: null
-    });
+  test("Add a new employee", inject(
+    [DbService],
+    async (dbService: DbService) => {
+      const email = "doug@r.com";
+      const result: string = await dbService.saveEmployee({
+        fullName: "Jorge Lopez",
+        age: 47,
+        cityCode: "HAB",
+        email: email,
+        salary: 10000,
+        id: null
+      });
 
-    expect(result).toBe("Employee has been saved successfully");
+      expect(result).toBe("Employee has been saved successfully");
 
-    // Test clean up deleting the employee created
-    const employee: EmployeeModel = await dbService.findEmployeeByEmail(email);
-    await dbService.deleteEmployee(employee.id);
-  }));
+      // Test clean up deleting the employee created
+      const employee: EmployeeModel = await dbService.findEmployeeByEmail(
+        email
+      );
+      await dbService.deleteEmployee(employee.id);
+    }
+  ));
 
-  it("Delete an employee", inject([DbService], async (dbService: DbService) => {
-    // Test setup up creating new patient to be deleted
-    const email = "juan@r.com";
-    await dbService.saveEmployee({
-      fullName: "Mario Lopez",
-      age: 47,
-      cityCode: "CUB",
-      email: email,
-      salary: 10000,
-      id: null
-    });
+  test("Delete an employee", inject(
+    [DbService],
+    async (dbService: DbService) => {
+      // Test setup up creating new patient to be deleted
+      const email = "juan@r.com";
+      await dbService.saveEmployee({
+        fullName: "Mario Lopez",
+        age: 47,
+        cityCode: "CUB",
+        email: email,
+        salary: 10000,
+        id: null
+      });
 
-    // Actual test run
-    const employee: EmployeeModel = await dbService.findEmployeeByEmail(email);
-    const result = await dbService.deleteEmployee(employee.id);
-    expect(result).toBe(
-      "Employee Mario Lopez has been deleted from the system."
-    );
-  }));
+      // Actual test run
+      const employee: EmployeeModel = await dbService.findEmployeeByEmail(
+        email
+      );
+      const result = await dbService.deleteEmployee(employee.id);
+      expect(result).toBe(
+        "Employee Mario Lopez has been deleted from the system."
+      );
+    }
+  ));
 
-  it("Try to delete an employee with invalid id we get error", inject(
+  test("Try to delete an employee with invalid id we get error", inject(
     [DbService],
     async (dbService: DbService) => {
       let result: string = await dbService.deleteEmployee(100000);
@@ -60,7 +70,7 @@ describe("DbService", () => {
     }
   ));
 
-  it("Update a patient and verify changes", inject(
+  test("Update a patient and verify changes", inject(
     [DbService],
     async (dbService: DbService) => {
       // Creating a new employee to be able to modify it

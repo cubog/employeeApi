@@ -8,11 +8,13 @@ import {
   Put,
   Delete,
   UseBefore,
-  Required
+  Required,
+  Session
 } from "@tsed/common";
 import { EmployeeModel } from "../models/EmployeeModel";
-import { CustomMiddleware } from "../middlewares/CustomMiddleware";
+import { RequestSessionMiddleware } from "../middlewares/RequestSessionMiddleware";
 import { DbService } from "../services/DbService";
+import { Unauthorized } from "ts-httpexceptions";
 
 /**
  * Employess controller
@@ -22,28 +24,48 @@ export class EmployeeCtrl {
   constructor(private dbService: DbService) {}
 
   @Get()
-  getAll(): Promise<EmployeeModel[]> {
-    return this.dbService.getEmployees();
+  getAll(@Session("user") user: any): Promise<EmployeeModel[]> {
+    if (user.auth) {
+      return this.dbService.getEmployees();
+    } else {
+      throw new Unauthorized("Unauthorized");
+    }
   }
 
   @Post()
-  @UseBefore(CustomMiddleware)
   createEmployee(
+    @Session("user") user: any,
     @BodyParams(EmployeeModel) model: EmployeeModel
   ): Promise<string> {
-    return this.dbService.saveEmployee(model);
+    if (user.auth) {
+      return this.dbService.saveEmployee(model);
+    } else {
+      throw new Unauthorized("Unauthorized");
+    }
   }
 
   @Put("/:id")
   updateEmployee(
+    @Session("user") user: any,
     @PathParams("id") @Required() id: number,
     @BodyParams(EmployeeModel) model: EmployeeModel
   ): Promise<string> {
-    return this.dbService.updateEmployee(id, model);
+    if (user.auth) {
+      return this.dbService.updateEmployee(id, model);
+    } else {
+      throw new Unauthorized("Unauthorized");
+    }
   }
 
   @Delete()
-  deleteEmployee(@QueryParams("id") id: number): Promise<string> {
-    return this.dbService.deleteEmployee(id);
+  deleteEmployee(
+    @Session("user") user: any,
+    @QueryParams("id") id: number
+  ): Promise<string> {
+    if (user.auth) {
+      return this.dbService.deleteEmployee(id);
+    } else {
+      throw new Unauthorized("Unauthorized");
+    }
   }
 }
